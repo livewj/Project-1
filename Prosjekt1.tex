@@ -1,0 +1,243 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %package to manage images
+\graphicspath{ {/Users/livewj/Documents/UiO/FYS2150/Bolgeoptikk} }
+
+
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{subcaption}
+
+
+\usepackage[rightcaption]{sidecap}
+\usepackage{wrapfig}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          
+  showtabs=false,                 
+  stepnumber=2,                    
+  stringstyle=\color{mymauve},     
+  tabsize=2,                      
+  title=\lstname                   
+}
+
+
+\title{Prosjekt 1}
+\author{Live Wang Jensen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+I dette prosjektet skal vi se nærmere på en numerisk løsning av den velkjente Poisson-ligningen, hvor Dirichlets grensebetingelser er brukt. Den andrederiverte er blitt tilnærmet med en tre-punkts-formel, og selve problemet løses ved hjelp av et lineært ligningssett. Vi skal løse disse ligningene på to ulike måter; ved Gauss-eliminasjon og ved LU-faktorisering. De to løsningsmetodene skal så sammenlignes når det kommer til FLOPS (floating point operations per second) og beregningstid.
+
+\end{abstract}
+
+\section{Introduksjon}
+Vi starter med å se på den én-dimensjonale Poisson ligningen for en sfærisk kule funksjon (?). Denne ligningen løses numerisk ved å dele opp, eller disktretisere, intervallet $x$ $\epsilon$ [0,1], og løsningen $f$ på ligningen er gitt. Teoridelen viser at det å finne en diskret løsning vil være det samme som å løse et lineært ligningssett, $A\textbf{u}$ = $\textbf{\~b}$. Det vil vise seg at matrisen $A$ er en såkalt tridiagonal matrise, noe som forenkler Gauss-eliminasjonen betraktelig. Selve metoden er implementert i et Python-program, hvor vi har variert antall grid-points $n$. Den numeriske løsningen sammenlignes så med den analytiske løsningen. Deretter beregnes den maksimale relative feilen i den numeriske løsningen. Resultatet plottes som en funksjon av $n$. Helt til slutt skal vi bruke LU-faktorisering på matrisen $A$ til å finne den numeriske løsningen på Poisson ligningen. Antall FLOPS og beregningstid sammenlignes så mellom de to løsningmetodene.
+
+\section{Teori}
+Mange differensialligninger innenfor fysikk kan skrives på formen
+\begin{equation}
+\frac{d^2y}{dx^2} + k^2(x)y = f(x)
+\end{equation}
+hvor $f$ er det uhomogene leddet i ligningen, og $k^2$ er en reell funksjon. Et typisk eksempel på en slik ligning finner vi i elektromagnetismen, nemlig Poisson-ligningen
+
+\begin{equation}
+\triangle^2 \Phi = -4\pi\rho(\textbf{r})
+\end{equation}
+
+Her er $\Phi$ det elektrostatiske potensialet, mens$\rho (\textbf{r})$ er ladningsfordelingen.
+Dersom vi antar at $\Phi$ og $\rho(\textbf{r})$ er sfærisk symmetriske, kan vi forenkle ligning (2) til en én-dimensjonal ligning,
+\begin{equation}
+\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\Phi}{dr}\right) = -4\pi\rho(r)
+\end{equation}
+
+Hvis vi bruker at  $\Phi(r) = \phi(r)/r$, kan ligningen skrives som
+\begin{equation}
+\frac{d^2\phi}{dr^2} = -4\pi r\rho(r)
+\end{equation}
+
+Det uhomogene leddet $f$ er nå gitt ved produktet $-4\pi\rho$. Dersom vi lar $\phi \rightarrow u$ og $r \rightarrow x$, ender vi opp med en generell, én-dimensjonal Poisson ligning på formen 
+\begin{equation}
+-u''(x) = f(x)
+\end{equation}
+
+Det er denne ligningen vi skal se nærmere på i denne oppgaven. Nærmere bestemt skal vi løse ligningen
+\begin{equation}
+-u''(x) = f(x),\quad  x \in (0,1), \quad    u(0) = u(1) = 0
+\end{equation}
+
+Vi skal altså holde oss innenfor intervallet $x \in (0,1)$, med Dirichlet-grensebetingelsene gitt ved $u(0) = u(1) = 0$. Vi definerer den diskrete tilnærmingen til løsningen $u$ med $v_i$, slik at $x_i = ih$, hvor $h = 1/(n+1)$ er steglengden. Vi får da at $x_0 = 0$ og $x_{n+1} = 1$. Den andrederiverte av $u$ kan da tilnærmes med en tre-punkts formel
+
+\begin{equation}
+-\frac{v_{i+1} + v_{i-1} - 2v_i}{h^2} = f_i \quad \textrm{når} \quad i = 1,...,n
+\end{equation}
+hvor $f_i = f(x_i)$ og grensebetingelsene er gitt som $v_0 = v_{n+1} = 0$. Feilleddet her går som $O(h^2)$.
+
+Dersom vi multipliserer leddet $h^2$ i ligning (7) på hver side, kan vi definere leddet på høyre side av ligningen som $\tilde{b_i} = h^2f_i$. Vi ender altså opp med 
+
+\begin{equation}
+- v_{i+1} - v_{i-1} + 2v_i = \tilde{b_i}
+\end{equation}
+
+Dersom vi setter inn ulike verdier av $i$ i ligningen ovenfor, ender vi opp med en tilhørende ligning på samme form:
+\[i=1: \quad v_2 + v_0 - 2v_1 = \tilde{b_1}\]
+\[i=2: \quad v_3 + v_1 -2v_2 = \tilde{b_2}\]
+osv.
+Vi ender altså opp med et lineært ligningssett som kan settes opp som en matriseligning:
+
+\begin{equation}
+    {\bf A} = \left(\begin{array}{cccccc}
+                           2& -1& 0 &\dots   & \dots &0 \\
+                           -1 & 2 & -1 &0 &\dots &\dots \\
+                           0&-1 &2 & -1 & 0 & \dots \\
+                           & \dots   & \dots &\dots   &\dots & \dots \\
+                           0&\dots   &  &-1 &2& -1 \\
+                           0&\dots    &  & 0  &-1 & 2 \\
+                      \end{array} \right)\left(\begin{array}{c}
+                           v_1\\
+                           v_2\\
+                           \dots \\
+                          \dots  \\
+                          \dots \\
+                           v_n\\
+                      \end{array} \right)
+  =\left(\begin{array}{c}
+                           \tilde{b}_1\\
+                           \tilde{b}_2\\
+                           \dots \\
+                           \dots \\
+                          \dots \\
+                           \tilde{b}_n\\
+                      \end{array} \right)
+\end{equation}
+
+hvor $A$ er en tridiagonal $nxn$-matrise. Hvis vi kaller vektorene
+\begin{equation}
+\left(\begin{array}{c}
+                           v_1\\
+                           v_2\\
+                           \dots \\
+                          \dots  \\
+                          \dots \\
+                           v_n\\
+                      \end{array} \right) = \textbf{v} \quad \textrm{og} \quad 
+                      \left(\begin{array}{c}
+                           \tilde{b}_1\\
+                           \tilde{b}_2\\
+                           \dots \\
+                           \dots \\
+                          \dots \\
+                           \tilde{b}_n\\
+                      \end{array} \right) =\tilde{\textbf{b}}
+\end{equation}
+kan vi på forkortet form skrive ligningen som
+\begin{equation}
+\textbf{Av} = \tilde{\textbf{b}}
+\end{equation}
+
+Her er $A$ og $\tilde{\textbf{b}}$ kjent, mens vektoren $\textbf{v}$ er den ukjente.
+
+I vårt tilfelle er funksjonen $f$ er gitt som $f(x) = 100e^{-10x}$. Dersom vi bruker dette i ligning (5) og integrerer denne ligningen analytisk, ender vi opp med en løsning på formen
+\begin{equation}
+u(x) = 1- (1-e^{-10})x-e^{-10x}
+\end{equation}
+
+Det er denne analytiske løsningen vi skal sammenligne den numeriske løsningen med. 
+
+\section{Løsningsmetoder}
+\subsection{Gauss-eliminasjon}
+\textbf{Generell tridiagonal matrise}\\
+Vi kan tenke oss at elementene langs diagonalen i matrisen vår, $A$, utgjør en vektor $b$, samtidig som elementene på hver side av diagonalen utgjør vektorene $a$ og $c$. Matriseligningen kan da skrives
+
+\begin{equation}
+    {\bf A} = \left(\begin{array}{cccccc}
+                           b_1& c_1 & 0 &\dots   & \dots &\dots \\
+                           a_2 & b_2 & c_2 &\dots &\dots &\dots \\
+                           & a_3 & b_3 & c_3 & \dots & \dots \\
+                           & \dots   & \dots &\dots   &\dots & \dots \\
+                           &   &  &a_{n-2}  &b_{n-1}& c_{n-1} \\
+                           &    &  &   &a_n & b_n \\
+                      \end{array} \right)\left(\begin{array}{c}
+                           v_1\\
+                           v_2\\
+                           \dots \\
+                          \dots  \\
+                          \dots \\
+                           v_n\\
+                      \end{array} \right)
+  =\left(\begin{array}{c}
+                           \tilde{b}_1\\
+                           \tilde{b}_2\\
+                           \dots \\
+                           \dots \\
+                          \dots \\
+                           \tilde{b}_n\\
+                      \end{array} \right).
+\end{equation}
+
+En tilfeldig ligning i dette ligningssettet vil kunne skrives som
+\begin{equation}
+a_iv_{i-1} + b_iv_i + c_iv_{i+1} = \tilde{b}_i \quad \textrm{når} \quad i = 1,2,...,n
+\end{equation}
+
+
+
+
+
+\textbf{Spesialtilfelle}\\
+I vårt tilfelle har elementene langs diagonalen identisk verdi.
+
+
+
+
+
+\section{Vedlegg}
+Github-adresse: LDKFJLDKSF
+
+%\lstinputlisting[language=Matlab]{/Users/livewj/Documents/UiO/FYS2150/Bolgeoptikk/test.m}
+
+
+
+\bibliography{Referanser}
+\begin{thebibliography}{9}
+
+\bibitem{squires}
+  $project1\_2016.pdf$
+  found at the official Github-page of the course $\textit{FYS3150 - Computational Physics}$
+  https://github.com/CompPhysics/ComputationalPhysics,
+  03.09.2016
+  
+    
+\end{thebibliography}
+
+\end{document}
+
