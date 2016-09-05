@@ -115,7 +115,7 @@ osv.
 Vi ender altså opp med et lineært ligningssett som kan settes opp som en matriseligning:
 
 \begin{equation}
-    {\bf A} = \left(\begin{array}{cccccc}
+    \left(\begin{array}{cccccc}
                            2& -1& 0 &\dots   & \dots &0 \\
                            -1 & 2 & -1 &0 &\dots &\dots \\
                            0&-1 &2 & -1 & 0 & \dots \\
@@ -179,7 +179,7 @@ Det er denne analytiske løsningen vi skal sammenligne den numeriske løsningen 
 Vi kan tenke oss at elementene langs diagonalen i matrisen vår, $A$, utgjør en vektor $b$, samtidig som elementene på hver side av diagonalen utgjør vektorene $a$ og $c$. Alle andre elementer i matrisen er null. Vi antar nå at elementene i hver vektor $a$, $b$ og $c$ \textit{ikke} er identiske. Matriseligningen kan da skrives
 
 \begin{equation}
-    {\bf A} = \left(\begin{array}{cccccc}
+    \left(\begin{array}{cccccc}
                            b_1& c_1 & 0 &\dots   & \dots &\dots \\
                            a_2 & b_2 & c_2 &\dots &\dots &\dots \\
                            & a_3 & b_3 & c_3 & \dots & \dots \\
@@ -206,7 +206,7 @@ Vi kan tenke oss at elementene langs diagonalen i matrisen vår, $A$, utgjør en
 
 hvor vektorene $a$, $b$ og $c$ har lengden $n$. Hvis vi nå tenker oss at n=4, forenkler denne matriseligningen seg noe:
 \begin{equation}
-    {\bf A} = \left(\begin{array}{cccccc}
+    \left(\begin{array}{cccccc}
                            b_1& c_1 & 0 &0 \\
                            a_2 & b_2 & c_2 &0 \\
                            0 & a_3 & b_3 & c_3 \\
@@ -289,7 +289,46 @@ Trekker nå $a_3 \cdot$(rad to) fra rad tre:
 \right]
 \]
 
-hvor vi i den siste overgangen har multiplisert tredje rad med $1/\tilde{d_3}$. Vi ser et gjentakende mønster hvor tilde = fgkdj
+I den siste overgangen har vi multiplisert tredje rad med $1/\tilde{d_3}$. Vi ser et gjentakende mønster hvor 
+\begin{equation}
+\tilde{d_i}= b_i - \frac{c_{i-1}}{\tilde{d_{i-1}}}a_i \quad \textrm{og} \quad \tilde{e_i}=\frac{\tilde{b_i}-\tilde{e_{i-1}a_i}}{\tilde{d_i}} \quad \textrm{hvor} \quad i = 2,3,...,n
+\end{equation}
+
+med initialbetingelser $\tilde{d_1} = b_1$ og $\tilde{e_1} = \tilde{b_1}/\tilde{d_1}$. Vi har nå utført en forlengs substitusjon. For å finne den endelinge (diskrete) løsningen \textbf{v}, bruker vi det vi kaller \textit{baklengs substitusjon}. Vi starter med å se på det endelinge resultatet etter at alle pivotelementene har blitt radredusert til ledende enere:
+
+\begin{equation}
+    \left(\begin{array}{cccccc}
+                           1 & c_1/\tilde{d_1} & 0 &0 \\
+                           0 & 1 & c_2/\tilde{d_2} &0 \\
+                           0 & 0 & 1 & c_3/\tilde{d_3} \\
+                           0 & 0 & 0 &  1  \\
+                      \end{array} \right)\left(\begin{array}{c}
+                           v_1\\
+                           v_2\\
+                           v_3\\
+                          v_4  \\
+                      \end{array} \right)
+  =\left(\begin{array}{c}
+                           \tilde{e}_1\\
+                           \tilde{e}_2\\
+                        \tilde{e}_3\\
+                        \tilde{e}_4\\
+                      \end{array} \right)
+\end{equation}
+
+Skriver vi ut ligningene får vi at
+\[v_4 = \tilde{e_4}\]
+\[v_3 + (c_3/\tilde{d_3})v_4 = \tilde{e_3} \]
+\[v_2 + (c_2/\tilde{d_2})v_3 = \tilde{e_2}\]
+\[v_1 + (c_1/\tilde{d_1})v_2 = \tilde{e_1}\]
+
+Den endelige algoritmen for å finne $v_i$ blir derfor på formen
+\begin{equation}
+v_i = \tilde{e_i}-(c_{i}/\tilde{d_i})v_{i+1} \quad \textrm{når} \quad i = n-1, n-2, ..., 1
+\end{equation}
+
+og $v_n$ = $\tilde{e_n} \quad \textrm{når} \quad i = n$. Det vi har kommet frem til kan nå implementeres inn i C++ på følgende måte:
+
 
 
 \textbf{Spesialtilfelle}\\
@@ -300,7 +339,7 @@ I vårt tilfelle har elementene langs diagonalen identisk verdi.
 
 
 \section{Vedlegg}
-Github-adresse: LDKFJLDKSF
+Github-adresse: https://github.com/livewj/Project-1
 
 %\lstinputlisting[language=Matlab]{/Users/livewj/Documents/UiO/FYS2150/Bolgeoptikk/test.m}
 
