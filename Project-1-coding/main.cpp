@@ -71,31 +71,43 @@ int main(int argc, char* argv[]) {
     c[n] = 0;
 
     //finding the numerical solution using Gauss elimination
-    //forward substitution:
+
     //initial conditions
     d_tilde[1] = b[1];
-
     e_tilde[1] = b_tilde[1]/d_tilde[1];
-    for (int i=2; i<=n; i++) {
-        //diagonal_new[i] = c[i-1]/d_tilde;
 
+    //General tridiagonal matrix:
+    //forward substitution
+    for (int i=2; i<=n; i++) {
         d_tilde[i] = b[i] - (c[i-1]/d_tilde[i-1])*a[i];
         e_tilde[i] =(b_tilde[i] - e_tilde[i-1]*a[i])/d_tilde[i];
     }
 
-    //backward substitution:
+    //backward substitution
     for (int i=n-1; i>=1; i--) {
-        v[i] = e_tilde[i] - (c[i]/d_tilde[i])*v[i+1];
-
+        v[i] = e_tilde[i] - (c[i]/d_tilde[i])*e_tilde[i+1];
+    }
+/*
+    //Our special case: NOE ER GALT HER
+    //forward substitution
+    for (int i=2; i<=n; i++) {
+        d_tilde[i] = 2 + 1./d_tilde[i-1];
+        e_tilde[i] = (b_tilde[i] + e_tilde[i-1])/d_tilde[i];
     }
 
+    //backward substitution
+    for (int i=n-1; i>=1; i--) {
+        v[i] = e_tilde[i] + e_tilde[i+1]/d_tilde[i];
+
+    }
+*/
     //finally, writing the results to a file:
     ofile.open(writetofile);
     ofile << "x:            u(x):           v(x):" << endl;
-    for (int i=1; i <=n; i++) { //writing to file
-        ofile << setw(10) << x[i]; //x-values
-        ofile << setw(10) << u[i]; //analytical solution
-        ofile << setw(10) << v[i] << endl;  //numerical solution
+    for (int i=1; i <=n; i++) { //writing to file and setting width
+        ofile << setw(12) << x[i]; //x-values
+        ofile << setw(12) << u[i]; //analytical solution
+        ofile << setw(12) << v[i] << endl;  //numerical solution
 
     }
     ofile.close();

@@ -327,16 +327,36 @@ Den endelige algoritmen for å finne $v_i$ blir derfor på formen
 v_i = \tilde{e_i}-(c_{i}/\tilde{d_i})v_{i+1} \quad \textrm{når} \quad i = n-1, n-2, ..., 1
 \end{equation}
 
-og $v_n$ = $\tilde{e_n} \quad \textrm{når} \quad i = n$. Det vi har kommet frem til kan nå implementeres inn i C++ på følgende måte:
+og $v_n$ = $\tilde{e_n}$ når $i$ = $n$. Figur \ref{fig:gausskode} viser hvordan disse algoritmene kan implementeres inn i C++:
 
-
+\FloatBarrier
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width = 100mm]{gauss_algoritme.png}\\
+  \caption{Figuren viser hvordan forlengs -og baklengs substitusjon kan implementeres i C++. Merk at dette kun er et utsnitt av koden, hele koden er å finne på undertegnedes GitHub-adresse.}\label{fig:gausskode}
+  \end{center}
+\end{figure}
+\FloatBarrier
 
 \textbf{Spesialtilfelle}\\
-I vårt tilfelle har elementene langs diagonalen identisk verdi.
+I vårt tilfelle har elementene langs diagonalen identisk verdi. Det vil si; alle elementene $a_i$ = $c_i$ = -1, og alle elementene langs diagonalen $b_i$ = 2. Setter vi disse tallene inn i algoritmen vår, får vi for forlengs substitusjon at
+\begin{equation}
+\tilde{d_i} = 2 + \frac{1}{\tilde{d_i}} \quad \textrm{og} \tilde{e_i} = \frac{\tilde{b_i} + \tilde{e}_{i-1}{\tilde{d_i}}
+\end{equation}
+
+når $i$ = 2, 3, ..., $n$, mens baklengs substitusjon forenkles til
+\begin{equation}
+v_i = \tilde{e_i} + \frac{v_{i+1}}{\tilde{d_i}}
+\end{equation}
+
+når $i$ = n-1, n-2, ..., 1. Figur REF viser hvordan dette vil se ut i C++.
+
+FIGUR HER
+FLOPS.
 
 
-
-
+\subsection{LU-faktorisering}
+Det finnes en annen måte å løse det lineære ligningssettet vårt på. 
 
 \section{Vedlegg}
 Github-adresse: https://github.com/livewj/Project-1
