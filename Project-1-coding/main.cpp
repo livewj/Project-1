@@ -4,7 +4,7 @@
 #include <iomanip>
 
 using namespace std;
-ofstream ofile;
+ofstream ofile; //for writing to file
 
 //This function uses Gaussian elimination to solve a tridiagonal matrix.
 //Our main problem is to solve the equation - u''(x) = f(x)
@@ -24,11 +24,11 @@ double analytical(double x) {
 //by using Gaussian elimination.
 //this program takes two arguments from the command-line: the filename and the size, n
 int main(int argc, char* argv[]) {
-    char *outfilename; //output filename
+    char *writetofile; //output filename
     int n;
 
-    //placing the command-line arguments
-    outfilename = argv[1];
+    //command-line arguments
+    writetofile = argv[1];
     n = atoi(argv[2]); //converting from ascii to int
 
     //declaring constants
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     //initial conditions
     d_tilde[1] = b[1];
 
-    e_tilde[1] = b_tilde[1]/d_tilde;
+    e_tilde[1] = b_tilde[1]/d_tilde[1];
     for (int i=2; i<=n; i++) {
         //diagonal_new[i] = c[i-1]/d_tilde;
 
@@ -89,7 +89,27 @@ int main(int argc, char* argv[]) {
 
     }
 
+    //finally, writing the results to a file:
+    ofile.open(writetofile);
+    ofile << "x:            u(x):           v(x):" << endl;
+    for (int i=1; i <=n; i++) { //writing to file
+        ofile << setw(10) << x[i]; //x-values
+        ofile << setw(10) << u[i]; //analytical solution
+        ofile << setw(10) << v[i] << endl;  //numerical solution
 
+    }
+    ofile.close();
+
+    //free memory
+    delete [] x;
+    delete [] u;
+    delete [] v;
+    delete [] a;
+    delete [] b;
+    delete [] c;
+    delete [] b_tilde;
+
+    return 0;
 }
 
 
