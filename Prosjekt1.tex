@@ -333,15 +333,20 @@ og $v_n$ = $\tilde{e_n}$ når $i$ = $n$. Figur \ref{fig:gausskode} viser hvordan
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[width = 100mm]{gauss_algoritme.png}\\
-  \caption{Figuren viser hvordan forlengs -og baklengs substitusjon kan implementeres i C++. Merk at dette kun er et utsnitt av koden, hele koden er å finne på undertegnedes GitHub-adresse.}\label{fig:gausskode}
+  \caption{Figuren viser hvordan forlengs -og baklengs substitusjon kan implementeres i C++. }\label{fig:gausskode}
   \end{center}
 \end{figure}
 \FloatBarrier
 
+Vi ser at den forlengs substitusjons-algoritmen har 6 FLOPS (floating point operations), mens baklengs substitusjon har 2 FLOPS. Vi ender altså opp med at 
+\begin{equation}
+N_{tridiagonal} = O(8n)
+\end{equation}
+
 \textbf{Spesialtilfelle}\\
 I vårt tilfelle har elementene langs diagonalen identisk verdi. Det vil si; alle elementene $a_i$ = $c_i$ = -1, og alle elementene langs diagonalen $b_i$ = 2. Setter vi disse tallene inn i algoritmen vår, får vi for forlengs substitusjon at
 \begin{equation}
-\tilde{d_i} = 2 + \frac{1}{\tilde{d_i}} \quad \textrm{og} \tilde{e_i} = \frac{\tilde{b_i} + \tilde{e}_{i-1}{\tilde{d_i}}
+\tilde{d_i} = 2 + \frac{1}{\tilde{d_i}} \quad \textrm{og} \quad \tilde{e_i} = \frac{\tilde{b_i} + \tilde{e}_{i-1}}{\tilde{d_i}}
 \end{equation}
 
 når $i$ = 2, 3, ..., $n$, mens baklengs substitusjon forenkles til
@@ -352,11 +357,52 @@ v_i = \tilde{e_i} + \frac{v_{i+1}}{\tilde{d_i}}
 når $i$ = n-1, n-2, ..., 1. Figur REF viser hvordan dette vil se ut i C++.
 
 FIGUR HER
-FLOPS.
+
+Vi ser nå at antall FLOPS har blitt redusert til 6, slik at 
+\begin{equation}
+N_{special} = O(6n)
+\end{equation}
+
 
 
 \subsection{LU-faktorisering}
-Det finnes en annen måte å løse det lineære ligningssettet vårt på. 
+Det finnes en annen måte å løse det lineære ligningssettet vårt på. Matrisen $A$ i ligningen $A\textbf{v}=\tilde{\textbf{b}}$ kan dekomponeres til et produkt av to matriser, nemlig $L$ og $U$, hvor $L$ er en nedre triangulær matrise og $U$ er en øvre triangulær matrise: $A=LU$
+
+\begin{equation}
+ A = \left(\begin{array}{cccccc}
+                          1 & 0 & 0 &\dots    & 0 \\
+                           l_{21} & 1 & 0 &\dots &0 \\
+                           l_{31} & l_{32} & 1 & \dots &0 \\
+                          \vdots  & \vdots   &    &\vdots   \\
+                           l_{n1 }& l_{n2}  & l_{n3}  &\dots  &1 \\                         
+                      \end{array} \right) 
+                      \left(\begin{array}{cccccc}
+                          u_{11} & u_{12} & u_{13} &\dots  & u_{1n} \\
+                           0 & u_{22} & u_{23} &\dots & u_{2n} \\
+                           0 & 0 & u_{33} & \dots & u_{3n} \\
+                          \vdots  & \vdots   &    &\vdots   \\
+                           0 & 0   & 0  &\dots  & u_{nn} \\                         
+                      \end{array} \right)
+\end{equation}
+
+Vi kan nå sette inn at $A=LU$ i ligningen $A\textbf{v}=\tilde{\textbf{b}}$, slik at $L(U\textbf{v}) = \tilde{\textbf{b}}$. Vi ender opp med to ligningssett:
+\begin{equation}
+L\textbf{y} = \tilde{\textbf{b}} \quad \textrm{og} \quad U\textbf{v} = \textbf{y}
+\end{equation}
+
+Her finner vi først $\textbf{y}$, for så å bruke $\textbf{y}$ til å finne løsningen $\textbf{v}$.
+
+
+\section{Relativ feil}
+OPPGAVE d)
+
+Vi kan finne størrelsen på den relative feilen i beregningene vi nå har gjort. Ved å implementere formelen 
+\begin{equation}
+\epsilon_i = log_{10} \left(\left| \frac{v_i - u_i}{u_i} \right| \right)
+\end{equation} 
+
+hvor $i = 1,...,n$. $\epsilon_i$ er da en funksjon av $log_{10}(h)$, siden verdiene $v_i$ og $u_i$ avhenger av steglengden $h$. Vi finner den maksimale relative feilen for ulike verdier av $n$, helt opp til $n=10^7$.
+
 
 \section{Vedlegg}
 Github-adresse: https://github.com/livewj/Project-1

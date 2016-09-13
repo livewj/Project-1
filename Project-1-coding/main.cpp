@@ -71,6 +71,7 @@ int main(int argc, char* argv[]) {
     c[n] = 0;
 
     //finding the numerical solution using Gauss elimination
+    double *diagonal_new = new double[n+1];
 
     //initial conditions
     d_tilde[1] = b[1];
@@ -79,13 +80,14 @@ int main(int argc, char* argv[]) {
     //General tridiagonal matrix:
     //forward substitution
     for (int i=2; i<=n; i++) {
-        d_tilde[i] = b[i] - (c[i-1]/d_tilde[i-1])*a[i];
+        diagonal_new[i] = c[i-1]/d_tilde[1];
+        d_tilde[i] = b[i] - diagonal_new[i]*a[i];
         e_tilde[i] =(b_tilde[i] - e_tilde[i-1]*a[i])/d_tilde[i];
     }
 
     //backward substitution
     for (int i=n-1; i>=1; i--) {
-        v[i] = e_tilde[i] - (c[i]/d_tilde[i])*e_tilde[i+1];
+        v[i] -= diagonal_new[i+1]*e_tilde[i+1];
     }
 /*
     //Our special case: NOE ER GALT HER
