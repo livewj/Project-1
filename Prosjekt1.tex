@@ -390,10 +390,15 @@ Vi kan nå sette inn at $A=LU$ i ligningen $A\textbf{v}=\tilde{\textbf{b}}$, sli
 L\textbf{y} = \tilde{\textbf{b}} \quad \textrm{og} \quad U\textbf{v} = \textbf{y}
 \end{equation}
 
-Her finner vi først $\textbf{y}$, for så å bruke $\textbf{y}$ til å finne løsningen $\textbf{v}$.
+Her finner vi først $\textbf{y}$, for så å bruke $\textbf{y}$ til å finne løsningen $\textbf{v}$. Bibliotekene $\texttt{lib.h}$ og $\texttt{lib.cc}$ inneholder funksjonene vi trenger for å utføre LU-dekomposisjonen. Funksjonen $\texttt{ludcmp}$ finner selve LU-dekomposisjonen, mens $\texttt{lubksb}$ utfører en baklengs substitusjon for å finne løsningen $\textbf{v}$. Firgur REF viser hvordan dette kan implementeres i C++:
+
+FIGUR HER
 
 
-\section{Relativ feil}
+
+
+
+\section{Resultater}
 OPPGAVE d)
 
 Vi kan finne størrelsen på den relative feilen i beregningene vi nå har gjort. Ved å implementere formelen 
@@ -419,6 +424,9 @@ Github-adresse: https://github.com/livewj/Project-1
   found at the official Github-page of the course $\textit{FYS3150 - Computational Physics}$
   https://github.com/CompPhysics/ComputationalPhysics,
   03.09.2016
+  
+\bibitem{}
+  Slides fra kursets offisielle nettside: "Matrices and linear algebra" http://compphysics.github.io/ComputationalPhysics/doc/web/course, 14.09.16
   
     
 \end{thebibliography}

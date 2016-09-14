@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.13)  14 SEP 2016 00:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.13)  14 SEP 2016 00:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -504,26 +504,32 @@ File: gauss_algoritme.png Graphic file (type png)
 <use gauss_algoritme.png>
 Package pdftex.def Info: gauss_algoritme.png used on input line 335.
 (pdftex.def)             Requested size: 284.52756pt x 140.91972pt.
- [5 <./gauss_algoritme.png>] [6]
+ [5 <./gauss_algoritme.png>]
+Overfull \hbox (17.3612pt too wide) in paragraph at lines 393--394
+[]$ \OT1/cmr/m/n/10 og $[]$ in-neholder funksjonene vi trenger for ^^Wa utf^^\r
+e LU-dekomposisjonen. 
+ []
+
+[6]
 No file Prosjekt1.bbl.
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--421
+Underfull \hbox (badness 10000) in paragraph at lines 421--425
 []$\OML/cmm/m/it/10 project\OT1/cmr/m/n/10 1[]2016\OML/cmm/m/it/10 :pdf$ \OT1/c
 mr/m/n/10 found at the of-fi-cial Github-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--421
+Underfull \hbox (badness 10000) in paragraph at lines 421--425
 \OT1/cmr/m/n/10 page of the course $[]$
  []
 
 [7] (./Prosjekt1.aux) ) 
 Here is how much of TeX's memory you used:
- 4497 strings out of 493117
- 67920 string characters out of 6135433
+ 4499 strings out of 493117
+ 67941 string characters out of 6135433
  171925 words of memory out of 5000000
- 7899 multiletter control sequences out of 15000+600000
- 8848 words of font info for 31 fonts, out of 8000000 for 9000
+ 7900 multiletter control sequences out of 15000+600000
+ 9016 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,8n,40p,1027b,322s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/a
@@ -540,11 +546,12 @@ mr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
 fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
 /usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></u
-sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Prosjekt1.pdf (7 pages, 218346 bytes).
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Prosjekt1.pdf (7 pages, 227778 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 95 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
