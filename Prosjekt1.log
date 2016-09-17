@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.13)  14 SEP 2016 00:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.13)  17 SEP 2016 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -355,7 +355,11 @@ Package color Info: Driver file: pdftex.def on input line 137.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2014/03/04 1.5c listings language file
 )
-(./Prosjekt1.aux)
+(./Prosjekt1.aux
+
+LaTeX Warning: Label `' multiply defined.
+
+)
 \openout1 = `Prosjekt1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
@@ -370,8 +374,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
-
-(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count101
 \scratchdimen=\dimen122
@@ -481,10 +484,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (36.52127pt too wide) in paragraph at lines 98--99
+Overfull \hbox (30.43793pt too wide) in paragraph at lines 98--99
 []\OT1/cmr/m/n/10 Vi skal alts^^Wa holde oss in-nen-for in-ter-val-let $\OML/cm
 m/m/it/10 x \OMS/cmsy/m/n/10 2 \OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/
-n/10 1)$, med Dirichlet-grensebetingelsene
+n/10 1)$, med Dirichlet-grensebetingelser
  []
 
 [2]
@@ -494,7 +497,7 @@ en nu-meriske l^^\sningen
  []
 
 [3]
-Overfull \hbox (51.36761pt too wide) detected at line 290
+Overfull \hbox (51.36761pt too wide) detected at line 291
 [] \OMS/cmsy/m/n/10 ^^X []
  []
 
@@ -502,56 +505,149 @@ Overfull \hbox (51.36761pt too wide) detected at line 290
 File: gauss_algoritme.png Graphic file (type png)
 
 <use gauss_algoritme.png>
-Package pdftex.def Info: gauss_algoritme.png used on input line 335.
-(pdftex.def)             Requested size: 284.52756pt x 140.91972pt.
- [5 <./gauss_algoritme.png>]
-Overfull \hbox (17.3612pt too wide) in paragraph at lines 393--394
-[]$ \OT1/cmr/m/n/10 og $[]$ in-neholder funksjonene vi trenger for ^^Wa utf^^\r
-e LU-dekomposisjonen. 
+Package pdftex.def Info: gauss_algoritme.png used on input line 336.
+(pdftex.def)             Requested size: 369.88582pt x 183.19708pt.
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 336--336
+ [] 
  []
 
-[6]
+[5] <simplified.png, id=35, 455.7025pt x 405.515pt>
+File: simplified.png Graphic file (type png)
+ <use simplified.png>
+Package pdftex.def Info: simplified.png used on input line 363.
+(pdftex.def)             Requested size: 284.52756pt x 253.19873pt.
+
+[6 <./gauss_algoritme.png>] [7 <./simplified.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 444--445
+
+ []
+
+[8]
+Overfull \hbox (22.61116pt too wide) in paragraph at lines 451--452
+[]$ \OT1/cmr/m/n/10 og $[]$ in-neholder funksjonene vi trenger for ^^Wa utf^^\r
+e LU-dekomposisjonen.
+ []
+
+<LU.png, id=48, 621.32124pt x 160.6pt>
+File: LU.png Graphic file (type png)
+ <use LU.png>
+Package pdftex.def Info: LU.png used on input line 456.
+(pdftex.def)             Requested size: 369.88582pt x 95.60841pt.
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 456--456
+ [] 
+ []
+
+<b_n10.png, id=49, 578.16pt x 433.62pt>
+File: b_n10.png Graphic file (type png)
+ <use b_n10.png>
+Package pdftex.def Info: b_n10.png used on input line 477.
+(pdftex.def)             Requested size: 284.52756pt x 213.39536pt.
+ [9 <./LU.png>]
+<b_n100.png, id=55, 578.16pt x 433.62pt>
+File: b_n100.png Graphic file (type png)
+ <use b_n100.png>
+Package pdftex.def Info: b_n100.png used on input line 486.
+(pdftex.def)             Requested size: 284.52756pt x 213.39536pt.
+
+<b_n1000.png, id=56, 578.16pt x 433.62pt>
+File: b_n1000.png Graphic file (type png)
+ <use b_n1000.png>
+Package pdftex.def Info: b_n1000.png used on input line 495.
+(pdftex.def)             Requested size: 284.52756pt x 213.39536pt.
+ [10 <./b_n10.png> <./b_n100.png>] <timer.png, id=62, 423.5825pt x 166.6225pt>
+File: timer.png Graphic file (type png)
+ <use timer.png>
+Package pdftex.def Info: timer.png used on input line 506.
+(pdftex.def)             Requested size: 284.52756pt x 111.92633pt.
+
+[11 <./b_n1000.png> <./timer.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 545--546
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 600--601
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 602--603
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 604--605
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 606--607
+
+ []
+
+
+Overfull \hbox (25.93814pt too wide) in paragraph at lines 608--609
+\OT1/cmr/m/n/10 mask-i-nen til ^^Wa la-gre alle ma-triseele-mentene. N^^War $\O
+ML/cmm/m/it/10 n$ \OT1/cmr/m/n/10 blir be-trak-telig stor (st^^\rrelsesorden
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 612--613
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 614--615
+
+ []
+
 No file Prosjekt1.bbl.
 
-Underfull \hbox (badness 10000) in paragraph at lines 421--425
-[]$\OML/cmm/m/it/10 project\OT1/cmr/m/n/10 1[]2016\OML/cmm/m/it/10 :pdf$ \OT1/c
-mr/m/n/10 found at the of-fi-cial Github-
+Underfull \hbox (badness 10000) in paragraph at lines 628--631
+[]\OT1/cmr/m/n/10 Kursets off-isielle Github-side $[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 421--425
-\OT1/cmr/m/n/10 page of the course $[]$
+Underfull \hbox (badness 5817) in paragraph at lines 633--634
+[]\OT1/cmr/m/n/10 Slides fra kursets off-isielle nett-side: "Ma-tri-ces and lin
+-ear al-ge-
  []
 
-[7] (./Prosjekt1.aux) ) 
+[14] (./Prosjekt1.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4499 strings out of 493117
- 67941 string characters out of 6135433
+ 4540 strings out of 493117
+ 68444 string characters out of 6135433
  171925 words of memory out of 5000000
- 7900 multiletter control sequences out of 15000+600000
+ 7935 multiletter control sequences out of 15000+600000
  9016 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,8n,40p,1027b,322s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-5.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
-fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
-/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></u
-sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></us
-r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Prosjekt1.pdf (7 pages, 227778 bytes).
+ 42i,11n,40p,965b,341s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
+l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/20
+14/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Prosjekt1.pdf (14 pages, 384640 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 129 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
