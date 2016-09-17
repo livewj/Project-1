@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
     //Write to file
     ofile.open(outfilename);
     ofile << setiosflags(ios::showpoint | ios::uppercase);
-    ofile << "       n:             log10(h):          log10(max_error):  " << endl;
+    ofile << "       n:             log10(h):    log10(max_error):  " << endl;
     int n = initial_n;
     for (int i=0; i<number_of_steps; i++) {
        h_log10[i] = log10(1./(n+1));

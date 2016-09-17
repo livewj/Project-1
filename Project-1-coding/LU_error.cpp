@@ -1,5 +1,5 @@
 /*
-**     Project1: e) Comparing the execution time for the LU-decomposition and the
+**     Project1: e) Comparing the relative error for the LU-decomposition and the
 **     algorithm for solving the tridiagonal matrix
 **     
 */
@@ -21,13 +21,15 @@ ofstream ofile;
 //Declaring functions
 double Solution(double);
 double f(double);
-double LU_execution_time(int);
-double tridiagonal_execution_time(int);
+double LU_error(int);
+double tridiagonal_error(int);
+double error(double, double);
 
 
 // Functions that will be used:
 double Solution(double x) {return 1.0-(1-exp(-10))*x-exp(-10*x);}
 double f(double x) {return 100*exp(-10*x);}
+double error(double u, double v) {return log10(fabs(v-u));} //calculating the error
 
 void initialize (int *initial_n, int *number_of_steps, int *step_increase){
     printf("Read in initial_n, number_of_steps and step_increase \n");
@@ -35,20 +37,28 @@ void initialize (int *initial_n, int *number_of_steps, int *step_increase){
     return;
 }
 
-double LU_execution_time(int n) {
+double LU_error(int n) {
     double *x = new double[n+2];
     double **A; //our matrix
-    double CPU_time;
+    double max_error;
     double h = 1.0/(n+1.0);
     double *b_twidd = new double[n];
+    double *u = new double [n+2]; //analytical solution
+    double *v = new double [n+2]; //numerical solution
+    u[0] = 0;
+    v[0] = 0;
+    double CPU;
 
     //Filling up x-array
     for (int i=0; i<=n+1; i++) {
     x[i] = i*h; }
 
-    //Right hand side of equation
+    //Right hand side of equation and analytical solution
     for (int i=1; i<=n; i++) {
-    b_twidd[i] = h*h*f(x[i]); }
+        b_twidd[i] = h*h*f(x[i]); 
+        u[i] = Solution(x[i]);
+    }
+
 
     //Constructing the matrix
     A = new double*[n]; //nxn -matrix
@@ -78,7 +88,13 @@ double LU_execution_time(int n) {
     //LU-decomposition of matrix A
     int *index;
     double d;
+    double *b_twidd_backup = new double [n];
     index = new int[n]; //keeps track of the number of interchanges of rows.
+
+    //backup of b_twidd
+    for (int i=1; i<=n; i++) {
+        b_twidd_backup[i] = h*h*f(x[i]);
+    }
 
     //start timer
     clock_t start, finish;
@@ -89,27 +105,36 @@ double LU_execution_time(int n) {
 
     //stop timer
     finish = clock();
-    CPU_time = ((double) (finish - start)/CLOCKS_PER_SEC );
+    CPU = ((double) (finish - start)/CLOCKS_PER_SEC );
 
     //print solution in terminal
-    for (int i=0; i<n; i++) {
-        cout << "LU solution:" << b_twidd[i] << endl;
+    //for (int i=0; i<n; i++) {
+    //    cout << "LU solution:" << b_twidd[i] << endl;}
+
+    //largest relative error:
+    max_error = fabs(error(u[1], b_twidd[1]));
+    for (int i=1; i<=n; i++) {
+        if (fabs(error(u[i], b_twidd[i])) < fabs(max_error)) {
+            max_error = error(u[i], b_twidd[i]); //update largest value
+        }
     }
     
 
     //free memory
     delete [] x;
     delete [] b_twidd;
+    delete [] b_twidd_backup;
     for (int i=0; i<n; i++) { //delete matrix elements
         delete [] A[i];
     }
     delete [] A; //delete matrix
 
-    return CPU_time;
+    return max_error;
 }
 
-double tridiagonal_execution_time(int n) {
-    double CPU_time;
+double tridiagonal_error(int n) {
+    double max_error;
+    double CPU;
     double h = 1.0/(n+1.0);
     double *x = new double[n+2];
     double *b_twidd = new double[n+1]; // construction with n+1 points to make
@@ -174,13 +199,19 @@ double tridiagonal_execution_time(int n) {
 
     //stop timer
     finish = clock();
-    CPU_time = ( (double) (finish - start)/CLOCKS_PER_SEC );
+    CPU = ( (double) (finish - start)/CLOCKS_PER_SEC );
 
     //print result to terminal
-    for (int i=1; i<n+1; i++) {
-        cout << "Tridiagonal solution:" << v[i] << endl;   
-    }
+    //for (int i=1; i<n+1; i++) {
+    //    cout << "Tridiagonal solution:" << v[i] << endl;}
   
+    //largest relative error:
+    max_error = fabs(error(u[1], v[1]));
+    for (int i=1; i<=n; i++) {
+        if (fabs(error(u[i], v[i])) < fabs(max_error)) {
+            max_error = error(u[i], v[i]); //update largest value
+        }
+    }
 
     //Free memory
     delete [] x;
@@ -191,7 +222,7 @@ double tridiagonal_execution_time(int n) {
     delete [] u;
     delete [] v;
 
-return CPU_time;
+return max_error;
 
 }
 
@@ -201,21 +232,21 @@ int main(int argc, char* argv[]) {
 
     // Declaration of initial variables:
     int initial_n, number_of_steps, step_increase;
-    double CPU_time;
+    double max_error;
     string outfilename;
-    outfilename = "compare.txt";
+    outfilename = "compare_error.txt";
 
     initialize (&initial_n, &number_of_steps, &step_increase);
 
     //Write to file
     ofile.open(outfilename);
     ofile << setiosflags(     ios::showpoint | ios::uppercase);
-    ofile << "            n:        LU (time):      Tridiagonal (time): " << endl;
+    ofile << "            n:        LU (error):      Tridiagonal (error): " << endl;
     int n = initial_n;
     for (int i=0; i<number_of_steps; i++) {
        ofile << setw(16) << setprecision(8) << n;
-       ofile << setw(16) << setprecision(8) << LU_execution_time(n);
-       ofile << setw(16) << setprecision(8) << tridiagonal_execution_time(n) << endl;
+       ofile << setw(16) << setprecision(8) << LU_error(n);
+       ofile << setw(16) << setprecision(8) << tridiagonal_error(n) << endl;
        n *= step_increase;
     }
     ofile.close();
@@ -224,3 +255,4 @@ int main(int argc, char* argv[]) {
 
 
 }
+
